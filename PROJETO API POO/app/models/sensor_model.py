@@ -1,64 +1,72 @@
-from .database import get_connection
+import sqlite3 # Adicionado para tipagem
+# Removida a importação de get_connection, pois agora ela vem do argumento da função.
+# from .database import get_connection 
 
 # =============================
-# CRUD — Banco de Dados
+# CRUD — Banco de Dados (DAO)
 # =============================
 
-def criar_sensor(tipo, local):
-    conn = get_connection()
+# 1. FUNÇÃO: criar_sensor
+def criar_sensor(conn: sqlite3.Connection, tipo: str, local: str):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("INSERT INTO sensores (tipo, local) VALUES (?, ?)", (tipo, local))
     conn.commit()
 
     sensor_id = cursor.lastrowid
-    conn.close()
+    # REMOVIDO: conn.close()
     return sensor_id
 
 
-def buscar_sensor(id):
-    conn = get_connection()
+# 2. FUNÇÃO: buscar_sensor
+def buscar_sensor(conn: sqlite3.Connection, id: int):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("SELECT tipo, local FROM sensores WHERE id = ?", (id,))
     row = cursor.fetchone()
 
-    conn.close()
+    # REMOVIDO: conn.close()
     return row
 
 
-def registrar_leitura(sensor_id, valor):
-    conn = get_connection()
+# 3. FUNÇÃO: registrar_leitura
+def registrar_leitura(conn: sqlite3.Connection, sensor_id: int, valor: float):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("INSERT INTO leituras (sensor_id, valor) VALUES (?, ?)", (sensor_id, valor))
     conn.commit()
-    conn.close()
+    # REMOVIDO: conn.close()
 
 
-def listar_sensores():
-    conn = get_connection()
+# 4. FUNÇÃO: listar_sensores
+def listar_sensores(conn: sqlite3.Connection):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM sensores")
     sensores = cursor.fetchall()
-    conn.close()
+    # REMOVIDO: conn.close()
     return sensores
 
 
-def listar_leituras(sensor_id):
-    conn = get_connection()
+# 5. FUNÇÃO: listar_leituras
+def listar_leituras(conn: sqlite3.Connection, sensor_id: int):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("SELECT valor FROM leituras WHERE sensor_id = ?", (sensor_id,))
     dados = cursor.fetchall()
 
-    conn.close()
+    # REMOVIDO: conn.close()
     return [d[0] for d in dados]
 
 
-def gerar_relatorio():
-    conn = get_connection()
+# 6. FUNÇÃO: gerar_relatorio
+def gerar_relatorio(conn: sqlite3.Connection):
+    # REMOVIDO: conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -69,5 +77,5 @@ def gerar_relatorio():
     """)
 
     dados = cursor.fetchall()
-    conn.close()
+    # REMOVIDO: conn.close()
     return dados
