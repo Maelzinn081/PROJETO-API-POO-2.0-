@@ -1,4 +1,4 @@
-from models.sensor_model import (
+from app.models.sensor_model import (
     criar_sensor,
     buscar_sensor,
     registrar_leitura,
@@ -7,7 +7,7 @@ from models.sensor_model import (
     gerar_relatorio
 )
 
-from models.sensor_classes import (
+from app.models.sensor_classes import (
     Sensor, SensorTemperatura, SensorUmidade, SensorQualidadeAr
 )
 

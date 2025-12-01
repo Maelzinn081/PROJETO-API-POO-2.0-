@@ -48,7 +48,3 @@ def relatorio(conn: sqlite3.Connection = Depends(get_db)):
     return service_relatorio(conn)
 
 
-@router.get("/relatorio")
-def relatorio():
-    return service_relatorio()
-

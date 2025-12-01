@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
 
-class DispositivoMonitoramento(ABC):
 
-    @abstractmethod
+class DispositivoMonitoramento():
+
     def analisar_dado(self, valor):
         pass
 
@@ -20,26 +19,37 @@ class Sensor(DispositivoMonitoramento):
 class SensorTemperatura(Sensor):
 
     def analisar_dado(self, valor):
-        if valor > 40:
-            return "ALERTA! Temperatura alta!"
-        if valor < 0:
-            return "ALERTA! Temperatura baixa!"
-        return "Temperatura normal."
-
+        if valor < 10:
+            return "temperatura muito baixa"
+        elif valor < 18:
+            return "temperatura baixa"
+        elif valor <= 24:
+            return "Temperatura neutra"
+        elif valor <= 30:
+            return "Temperatura alta"
+        return "Temperatura muito alta"
 
 class SensorUmidade(Sensor):
 
     def analisar_dado(self, valor):
-        if valor > 80:
-            return "ALERTA! Umidade alta!"
         if valor < 20:
-            return "ALERTA! Umidade baixa!"
-        return "Umidade normal."
+            return "Umidade muito baixa"
+        elif valor < 30:
+            return "Umidade baixa"
+        elif valor <= 50:
+            return "Umidade ideal"
+        elif valor <= 70:
+            return "Umidade alta"
+        return "Umidade muito alta."
 
 
 class SensorQualidadeAr(Sensor):
 
     def analisar_dado(self, valor):
-        if valor > 150:
-            return "ALERTA! Qualidade do ar ruim!"
-        return "Qualidade do ar aceitável."
+        if valor <= 50:
+            return "Qualidade do ar EXCELENTE"
+        elif valor <= 100:
+            return "Qualidade do ar BOA"
+        elif valor <= 150:
+            return "Qualidade do ar MODERADA"
+        return "Qualidade do ar RUIM"
