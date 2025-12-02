@@ -11,20 +11,19 @@ from app.models.sensor_classes import (
     Sensor, SensorTemperatura, SensorUmidade, SensorQualidadeAr
 )
 
-import sqlite3 # Adicione para tipagem
+import sqlite3 
 
 # =============================
 # SERVICES
 # =============================
 
-# 1. FUNÇÃO: service_criar_sensor
-# Recebe conn e o repassa para criar_sensor
+
+
 def service_criar_sensor(conn: sqlite3.Connection, tipo: str, local: str):
     return criar_sensor(conn, tipo, local)
 
 
-# 2. FUNÇÃO: service_registrar_leitura
-# Recebe conn e o repassa para as funções de DB
+
 def service_registrar_leitura(conn: sqlite3.Connection, id: int, valor: float):
     # Passa conn para buscar_sensor
     row = buscar_sensor(conn, id) 
@@ -34,7 +33,7 @@ def service_registrar_leitura(conn: sqlite3.Connection, id: int, valor: float):
 
     tipo, local = row
 
-    # Instância correta (Lógica de Negócio)
+   
     if tipo == "temperatura":
         sensor = SensorTemperatura(tipo, local)
     elif tipo == "umidade":
@@ -46,14 +45,13 @@ def service_registrar_leitura(conn: sqlite3.Connection, id: int, valor: float):
 
     alerta = sensor.analisar_dado(valor)
 
-    # Passa conn para registrar_leitura
+   
     registrar_leitura(conn, id, valor) 
 
     return alerta, None
 
 
-# 3. FUNÇÃO: service_listar_sensores
-# Recebe conn e o repassa para as funções de DB
+
 def service_listar_sensores(conn: sqlite3.Connection):
     # Passa conn para listar_sensores
     sensores = listar_sensores(conn)
@@ -76,8 +74,8 @@ def service_listar_sensores(conn: sqlite3.Connection):
     return resultado
 
 
-# 4. FUNÇÃO: service_relatorio
-# Recebe conn e o repassa para gerar_relatorio
+
 def service_relatorio(conn: sqlite3.Connection):
     return gerar_relatorio(conn)
+
 
